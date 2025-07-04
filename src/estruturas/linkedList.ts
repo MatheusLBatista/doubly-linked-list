@@ -26,4 +26,17 @@ export class LinkedList<T>  {
         }
         this.tamanho++;
     }
+
+    removeLast(): T {
+        if (!this.fim) throw new Error("Lista vazia");
+        const valor = this.fim.dado;
+        this.fim = this.fim.anterior;
+        if (this.fim) {
+            this.fim.proximo = null;
+        } else {
+            this.inicio = null;
+        }
+        this.tamanho--;
+        return valor;
+    }
 }
