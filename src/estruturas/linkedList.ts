@@ -39,4 +39,12 @@ export class LinkedList<T>  {
         this.tamanho--;
         return valor;
     }
+
+    size(): number {
+        return this.tamanho;
+    }
+
+    isEmpty(): boolean {
+        return this.tamanho === 0;
+    }
 }
