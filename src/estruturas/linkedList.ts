@@ -40,6 +40,11 @@ export class LinkedList<T>  {
         return valor;
     }
 
+    peekFirst(): T {
+        if (!this.inicio) throw new Error("Lista vazia");
+        return this.inicio.dado;
+    }
+
     size(): number {
         return this.tamanho;
     }
