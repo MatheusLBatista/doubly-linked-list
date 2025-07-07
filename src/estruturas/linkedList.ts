@@ -98,6 +98,54 @@ export class LinkedList<T>  {
         return valor;
     }
 
+    remove(index: number): T {
+        if (index < 0 || index >= this.tamanho) {
+            throw new Error("Índice inválido. Tente novamente!");
+        }
+
+        if (index === 0) {
+            const valor = this.removeFirst();
+            if (valor === undefined) throw new Error("Erro ao tentar remover");
+            return valor;
+        }
+
+        if (index === this.tamanho - 1) {
+            return this.removeLast();
+        }
+
+        let atual: Node<T> | null;
+        let i: number;
+
+        if (index < this.tamanho / 2) {
+            atual = this.inicio;
+            i = 0;
+            while (i < index && atual) {
+                atual = atual.proximo;
+                i++;
+            }
+        } else {
+            atual = this.fim;
+            i = this.tamanho - 1;
+            while (i > index && atual) {
+                atual = atual.anterior;
+                i--;
+            }
+        }
+
+        const anterior = atual!.anterior;
+        const proximo = atual!.proximo;
+
+        if (anterior) {
+            anterior.proximo = proximo;
+        } 
+        else if (proximo){
+            proximo.anterior = anterior;
+        }
+        this.tamanho--;
+
+        return atual!.dado;
+    }
+
     size(): number {
         return this.tamanho;
     }
