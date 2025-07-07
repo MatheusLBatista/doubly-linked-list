@@ -177,4 +177,16 @@ export class LinkedList<T>  {
         this.fim = null;
         this.tamanho = 0;
     }
+
+    printAll(): void {
+        let atual = this.inicio;
+        let resultado = "";
+
+        while (atual) {
+            resultado += `${atual.dado} `;
+            atual = atual.proximo;
+        }
+
+        console.log(resultado.trim());
+    }
 }
