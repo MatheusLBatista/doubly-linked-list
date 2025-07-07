@@ -138,7 +138,7 @@ export class LinkedList<T>  {
         if (anterior) {
             anterior.proximo = proximo;
         } 
-        else if (proximo){
+        if (proximo){
             proximo.anterior = anterior;
         }
         this.tamanho--;
