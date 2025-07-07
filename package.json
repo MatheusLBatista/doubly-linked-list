@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "dev": "tsx watch ./main.ts",
+    "dev": "tsx watch ./src/estruturas/linkedList.ts",
     "build": "tsc",
     "start": "node dist/main.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --runInBand",
