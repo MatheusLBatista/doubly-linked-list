@@ -27,6 +27,39 @@ export class LinkedList<T>  {
         this.tamanho++;
     }
 
+    add(dado: T, index: number): void {
+        if (index < 0 || index > this.tamanho) {
+            throw new Error("Índice fora do intervalo válido");
+        }
+
+        if (index === 0) {
+            this.addFirst(dado);
+            return;
+        }
+
+        if (index === this.tamanho) {
+            this.addLast(dado);
+            return;
+        }
+
+        const novoNo = new Node(dado);
+        let atual = this.inicio;
+
+        for (let i = 0; i < index; i++) {
+            atual = atual!.proximo;
+        }
+
+        const anterior = atual!.anterior;
+
+        novoNo.anterior = anterior;
+        novoNo.proximo = atual;
+
+        if (anterior) anterior.proximo = novoNo;
+        if (atual) atual.anterior = novoNo;
+
+        this.tamanho++;
+    }
+
     removeFirst(): T | undefined {
         if (!this.inicio) return undefined;
         const valor = this.inicio.dado;
