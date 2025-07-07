@@ -146,6 +146,20 @@ export class LinkedList<T>  {
         return atual!.dado;
     }
 
+    get(position: number): T {
+        if (position < 0 || position >= this.tamanho) {
+            throw new Error("Índice inválido. Tente novamente!");
+        }
+
+        let atual = this.inicio;
+
+        for (let i = 0; i < position; i++) {
+            atual = atual!.proximo;
+        }
+
+        return atual!.dado;
+    }
+
     size(): number {
         return this.tamanho;
     }
