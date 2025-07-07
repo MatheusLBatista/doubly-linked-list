@@ -64,4 +64,10 @@ export class LinkedList<T>  {
     peekLast(): T | undefined {
         return this.fim?.dado;
     }
+
+    clear(): void {
+        this.inicio = null;
+        this.fim = null;
+        this.tamanho = 0;
+    }
 }
