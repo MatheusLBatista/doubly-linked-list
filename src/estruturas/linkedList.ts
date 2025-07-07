@@ -60,4 +60,8 @@ export class LinkedList<T>  {
     isEmpty(): boolean {
         return this.tamanho === 0;
     }
+
+    peekLast(): T | undefined {
+        return this.fim?.dado;
+    }
 }
