@@ -27,6 +27,64 @@ export class LinkedList<T>  {
         this.tamanho++;
     }
 
+    addLast(dado: T): void {
+        const novoNo = new Node(dado);
+        if (!this.fim) {
+            this.inicio = this.fim = novoNo;
+        } else {
+            this.fim.proximo = novoNo;
+            novoNo.anterior = this.fim;
+            this.fim = novoNo;
+        }
+        this.tamanho++;
+    }
+
+    add(dado: T, index: number): void {
+        if (index < 0 || index > this.tamanho) {
+            throw new Error("Índice fora do intervalo válido");
+        }
+
+        if (index === 0) {
+            this.addFirst(dado);
+            return;
+        }
+
+        if (index === this.tamanho) {
+            this.addLast(dado);
+            return;
+        }
+
+        const novoNo = new Node(dado);
+        let atual = this.inicio;
+
+        for (let i = 0; i < index; i++) {
+            atual = atual!.proximo;
+        }
+
+        const anterior = atual!.anterior;
+
+        novoNo.anterior = anterior;
+        novoNo.proximo = atual;
+
+        if (anterior) anterior.proximo = novoNo;
+        if (atual) atual.anterior = novoNo;
+
+        this.tamanho++;
+    }
+
+    removeFirst(): T | undefined {
+        if (!this.inicio) return undefined;
+        const valor = this.inicio.dado;
+        this.inicio = this.inicio.proximo;
+        if (this.inicio) {
+            this.inicio.anterior = null;
+        } else {
+            this.fim = null;
+        }
+        this.tamanho--;
+        return valor;
+    }
+
     removeLast(): T {
         if (!this.fim) throw new Error("Lista vazia");
         const valor = this.fim.dado;
@@ -40,9 +98,66 @@ export class LinkedList<T>  {
         return valor;
     }
 
-    peekFirst(): T {
-        if (!this.inicio) throw new Error("Lista vazia");
-        return this.inicio.dado;
+    remove(index: number): T {
+        if (index < 0 || index >= this.tamanho) {
+            throw new Error("Índice inválido. Tente novamente!");
+        }
+
+        if (index === 0) {
+            const valor = this.removeFirst();
+            if (valor === undefined) throw new Error("Erro ao tentar remover");
+            return valor;
+        }
+
+        if (index === this.tamanho - 1) {
+            return this.removeLast();
+        }
+
+        let atual: Node<T> | null;
+        let i: number;
+
+        if (index < this.tamanho / 2) {
+            atual = this.inicio;
+            i = 0;
+            while (i < index && atual) {
+                atual = atual.proximo;
+                i++;
+            }
+        } else {
+            atual = this.fim;
+            i = this.tamanho - 1;
+            while (i > index && atual) {
+                atual = atual.anterior;
+                i--;
+            }
+        }
+
+        const anterior = atual!.anterior;
+        const proximo = atual!.proximo;
+
+        if (anterior) {
+            anterior.proximo = proximo;
+        } 
+        if (proximo){
+            proximo.anterior = anterior;
+        }
+        this.tamanho--;
+
+        return atual!.dado;
+    }
+
+    get(position: number): T {
+        if (position < 0 || position >= this.tamanho) {
+            throw new Error("Índice inválido. Tente novamente!");
+        }
+
+        let atual = this.inicio;
+
+        for (let i = 0; i < position; i++) {
+            atual = atual!.proximo;
+        }
+
+        return atual!.dado;
     }
 
     size(): number {
@@ -51,5 +166,32 @@ export class LinkedList<T>  {
 
     isEmpty(): boolean {
         return this.tamanho === 0;
+    }
+
+    peekFirst(): T {
+        if (!this.inicio) throw new Error("Lista vazia");
+        return this.inicio.dado;
+    }
+
+    peekLast(): T | undefined {
+        return this.fim?.dado;
+    }
+
+    clear(): void {
+        this.inicio = null;
+        this.fim = null;
+        this.tamanho = 0;
+    }
+
+    printAll(): void {
+        let atual = this.inicio;
+        let resultado = "";
+
+        while (atual) {
+            resultado += `${atual.dado} `;
+            atual = atual.proximo;
+        }
+
+        console.log(resultado.trim());
     }
 }
