@@ -10,7 +10,7 @@ export class Node<T> {
     }
 }
 
-export class LinkedList<T>  {
+export class LinkedList<T>  implements List<T>{
     private inicio: Node<T> | null = null;
     private fim: Node<T> | null = null;
     private tamanho: number = 0;
@@ -72,8 +72,8 @@ export class LinkedList<T>  {
         this.tamanho++;
     }
 
-    removeFirst(): T | undefined {
-        if (!this.inicio) return undefined;
+    removeFirst(): T {
+        if (!this.inicio) throw new Error("Lista vazia");
         const valor = this.inicio.dado;
         this.inicio = this.inicio.proximo;
         if (this.inicio) {
@@ -173,8 +173,9 @@ export class LinkedList<T>  {
         return this.inicio.dado;
     }
 
-    peekLast(): T | undefined {
-        return this.fim?.dado;
+    peekLast(): T {
+        if (!this.fim) throw new Error("Lista vazia");
+        return this.fim.dado;
     }
 
     clear(): void {
