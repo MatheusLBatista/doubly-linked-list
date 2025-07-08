@@ -168,6 +168,11 @@ export class LinkedList<T>  {
         return this.tamanho === 0;
     }
 
+    peekFirst(): T {
+        if (!this.inicio) throw new Error("Lista vazia");
+        return this.inicio.dado;
+    }
+
     peekLast(): T | undefined {
         return this.fim?.dado;
     }
